@@ -26,45 +26,43 @@ export default function Scheduler() {
   // console.log(taskList)
 
   //Read
-  useEffect(()=>{
-    const getTaskList = async () =>{
-      try {
-        // Read the data
-  
-        const queryRef = query(
-          tasksCollectionRef,
-          where("userId", "==", auth.currentUser.uid)
-        )
-  
-        const data = await getDocs(queryRef)
-  
-        //set data
-        const filteredData = data.docs.map((doc)=>{
-          return {
-            ...doc.data(),
-            id: doc.id,
-          
-          }
-        })
-        console.log("What the actual fuck")
-        // console.log(filteredData)
-        setTaskList(filteredData)
-  
-      } catch (error) {
-        console.error(error)
-      }
-  
-    }
-  
-    getTaskList()
+  const getTaskList = async () =>{
+    try {
+      // Read the data
 
+      const queryRef = query(
+        tasksCollectionRef,
+        where("userId", "==", auth.currentUser.uid)
+      )
+
+      const data = await getDocs(queryRef)
+
+      //set data
+      const filteredData = data.docs.map((doc)=>{
+        return {
+          ...doc.data(),
+          id: doc.id,
+        
+        }
+      })
+      console.log("What the actual fuck")
+      // console.log(filteredData)
+      setTaskList(filteredData)
+
+    } catch (error) {
+      console.error(error)
+    }
+
+  }
+  useEffect(()=>{
+    getTaskList()
   }, [])
   
 
   return (
     <section className='min-h-screen flex flex-col'>
         
-        <Nav />
+        <Nav getTaskList={getTaskList}/>
         
 
         {/* Sample Mockup Sizes:
@@ -80,7 +78,7 @@ export default function Scheduler() {
             })
           }
 
-          <div className='bg-yellow-300 w-3/4 mx-2 h-20 rounded-lg p-1 my-2 overflow-hidden'>Do your homework please</div>
+          {/* <div className='bg-yellow-300 w-3/4 mx-2 h-20 rounded-lg p-1 my-2 overflow-hidden'>Do your homework please</div>
 
           <div className='bg-orange-300 w-1/4 mx-2 h-20 rounded-lg p-1 my-2 overflow-hidden'>Do your homework please</div>
           <div className='bg-red-300 w-2/4 mx-2 h-20 rounded-lg p-1 my-2 overflow-hidden'>Do your homework please</div>
@@ -90,7 +88,7 @@ export default function Scheduler() {
 
           <div className='bg-green-300 w-1/4 mx-2 h-20 rounded-lg p-1 my-2 overflow-hidden'>Do your homework please</div>
           <div className='bg-yellow-300 w-1/4 mx-2 h-20 rounded-lg p-1 my-2 overflow-hidden'>Do your homework please</div>
-          <div className='bg-red-300 w-1/4 mx-2 h-20 rounded-lg p-1 my-2 overflow-hidden'>Do your homework please</div>
+          <div className='bg-red-300 w-1/4 mx-2 h-20 rounded-lg p-1 my-2 overflow-hidden'>Do your homework please</div> */}
         </section>
 
         <Footer/>

@@ -19,13 +19,25 @@ export default function Task({task}) {
         
     }
 
+    const setTaskWidth = ()=>{
+    
+        if (task.duration<=15){
+            return "25%"
+        }else if (task.duration<=120){
+            return "50%"
+        }else if (task.duration>120){
+            return "75%"
+        }
+        
+    }
+
 
 
     // setTaskColor()
     // setTaskWidth()
 
     const taskStyles = {
-        // width: `${task.width}%`, // Set the width based on task length
+        width: setTaskWidth(), // Set the width based on task length
         backgroundColor: setTaskColor(), // Set the background color based on priority
       };
 
