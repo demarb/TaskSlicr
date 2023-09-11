@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithP
 
 import LogoWhite from '../assets/logo-white.png'
 import googleLoginButton from '../assets/google-icon.png'
-import useUserStore from '../store'
+import { useUserStore } from '../store'
 import { useNavigate } from 'react-router-dom';
 
 
@@ -12,6 +12,9 @@ export default function Login() {
   //States
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  //Zustand States
+  const setUser = useUserStore(state=>state.setUser)
 
   //Firebase functions
   const navigate = useNavigate()
@@ -21,13 +24,7 @@ export default function Login() {
     try {
           await createUserWithEmailAndPassword(auth, email, password);
 
-          auth.currentUser ? 
-            
-              console.log(auth.currentUser)
-            
-            
-            : console.log("No user detected after regular signup")
-
+          loginSuccessful()
           navigate("/app")
       
     } catch (error) {
@@ -41,25 +38,7 @@ export default function Login() {
     try {
           await signInWithEmailAndPassword(auth, email, password);
 
-          // auth.currentUser ? 
-          //   setCurrentUserLogged((prevState)=>{
-          //     const newObj = {
-          //       em: auth.currentUser.email,
-          //       photo: auth.currentUser.photoURL
-          //     }
-          //     return newObj;
-          //   })
-          //   : console.log("No user detected after regular sign in")
-
-          // props.getTaskList()
-
-          auth.currentUser ? 
-            
-              console.log(auth.currentUser)
-            
-            
-            : console.log("No user detected after regular signin")
-
+          loginSuccessful()
           navigate("/app")
       
     } catch (error) {
@@ -72,28 +51,25 @@ export default function Login() {
     try {
           await signInWithPopup(auth, googleProvider);
 
-          // auth.currentUser ? 
-          //   setCurrentUserLogged((prevState)=>{
-          //     const newObj = {
-          //       em: auth.currentUser.email,
-          //       photo: auth.currentUser.photoURL
-          //     }
-          //     return newObj;
-          //   })
-          //   : console.log("No user detected after google signup")
-
-          auth.currentUser ? 
-            
-              console.log(auth.currentUser)
-            
-            
-            : console.log("No user detected after google signin")
-
-            navigate("/app")
+          loginSuccessful()
+          navigate("/app")
       
     } catch (error) {
       console.error(error)
     }
+  }
+
+  //Other Functions
+  const loginSuccessful = ()=>{
+    const user = {
+      loggedIn: true,
+      email: auth.currentUser.email,
+      photoUrl: auth.currentUser.photoURL,
+    }
+    console.log("Inside login Success")
+    console.log(user)
+
+    setUser(user)
   }
 
   return (
