@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ViewTask from './ViewTask'
 
-export default function Task({task}) {
+export default function Task({task, getTaskList}) {
 
     //States
     const [showTask, setShowTask] = useState(false)
@@ -50,7 +50,7 @@ export default function Task({task}) {
             <div onClick={viewTask} style={taskStyles} className='bg-yellow-300 w-3/4 mx-2 h-20 rounded-lg p-1 my-2 cursor-pointer overflow-hidden'>
                 {task.title}
             </div>
-            {showTask ? <ViewTask setShowTask={setShowTask} task={task}/> : <></>}
+            {showTask ? <ViewTask setShowTask={setShowTask} task={task} getTaskList={getTaskList}/> : <></>}
         </>
         
     )

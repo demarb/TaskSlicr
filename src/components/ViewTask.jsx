@@ -4,7 +4,7 @@ import DeleteIcon from '../assets/delete-purple.png'
 import { database, auth } from '../config/firebase';
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
-export default function ViewTask({ setShowTask, task }) {
+export default function ViewTask({ setShowTask, task, getTaskList }) {
 
   
   //Duration In Form
@@ -72,7 +72,8 @@ export default function ViewTask({ setShowTask, task }) {
           completedTimestamp: checkStatusTimestamp(),
         }
       )
-    // getTaskList()
+    getTaskList()
+    setShowTask((prevState)=>!prevState)
   }
 
   //Delete
@@ -82,7 +83,8 @@ export default function ViewTask({ setShowTask, task }) {
     const taskDoc = doc(database, "tasks", task.id)
     
     await deleteDoc(taskDoc)
-    // getTaskList()
+    getTaskList()
+    setShowTask((prevState)=>!prevState)
   }
 
 

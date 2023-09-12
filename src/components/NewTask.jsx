@@ -66,6 +66,7 @@ export default function NewTask({setShowAddNewTask, getTaskList}) {
         )
 
         getTaskList()
+        setShowAddNewTask((prevState)=>!prevState)
 
         } catch (error) {
         console.error(error)
