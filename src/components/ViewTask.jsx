@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import ExitPurple from '../assets/exit-purple.png'
 import DeleteIcon from '../assets/delete-purple.png'
 import { database, auth } from '../config/firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 export default function ViewTask({ setShowTask, task }) {
 
@@ -75,6 +75,16 @@ export default function ViewTask({ setShowTask, task }) {
     // getTaskList()
   }
 
+  //Delete
+  const deleteTask = async (e) => {
+    e.preventDefault();
+
+    const taskDoc = doc(database, "tasks", task.id)
+    
+    await deleteDoc(taskDoc)
+    // getTaskList()
+  }
+
 
   //Other Functions
   const checkStatusTimestamp = ()=>{
@@ -141,7 +151,7 @@ export default function ViewTask({ setShowTask, task }) {
                 </div>
                 <div className='flex items-center justify-between'>
                   <button onClick={(e)=>updateTask(e)} className='rounded-md border-purple-900 border text-purple-900 w-2/5 py-1 my-2 hover:bg-purple-900 hover:text-white'>Update</button>
-                  <img onClick={()=>console.log("Delete Click")} src={DeleteIcon} className='cursor-pointer'/>
+                  <img onClick={(e)=>deleteTask(e)} src={DeleteIcon} className='cursor-pointer'/>
                 </div>
                 
             </div>
