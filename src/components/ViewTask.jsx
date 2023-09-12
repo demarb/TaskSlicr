@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import ExitPurple from '../assets/exit-purple.png'
 import DeleteIcon from '../assets/delete-purple.png'
+import { database, auth } from '../config/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 
 export default function ViewTask({ setShowTask, task }) {
 
-
+  
   //Duration In Form
   const maxHours = 23;
   const maxMinutes = 59;
@@ -28,6 +30,13 @@ export default function ViewTask({ setShowTask, task }) {
   const [taskDurationMinutes, setTaskDurationMinutes] = useState(0)
   
   const [taskStatus, setTaskStatus] = useState(task.status)
+  const [taskCompletedTimestamp, setTaskCompletedTimestamp] = useState(task.completedTimestamp)
+
+    //Track previous status to set completedtimestamp
+    const prevStatusRef = useRef();
+    useEffect(() => {
+      prevStatusRef.current = taskStatus;
+    }, []);
 
   //Convert ISO string to format "YYYY-MM-DDTHH:MM"
   const formattedDueDate = task.dueDate.slice(0, 16);
@@ -40,6 +49,43 @@ export default function ViewTask({ setShowTask, task }) {
     setTaskDurationHours(hours);
     setTaskDurationMinutes(minutes);
   }, [])
+
+  //Firebase functions
+  //Update
+  const updateTask = async (e) => {
+    e.preventDefault();
+
+    const taskDoc = doc(database, "tasks", task.id)
+    
+    await updateDoc(taskDoc, 
+        //updated fields
+        {
+          title: taskTitle,
+          description: taskDescription,
+          priority: taskPriority,
+          duration: ((parseInt(taskDurationHours)*60) + parseInt(taskDurationMinutes)),
+          status: taskStatus,
+          dueDate: new Date(taskDueDate).toISOString(),
+
+          userId: auth.currentUser ? auth.currentUser.uid : "",
+          modifiedTimestamp: new Date().toISOString(),
+          completedTimestamp: checkStatusTimestamp(),
+        }
+      )
+    // getTaskList()
+  }
+
+
+  //Other Functions
+  const checkStatusTimestamp = ()=>{
+    if (prevStatusRef.current===false && taskStatus===true){
+      return new Date().toISOString()
+    }else if(prevStatusRef.current===true && taskStatus===false) {
+      return ""
+    }else{
+      return taskCompletedTimestamp
+    }
+  }
 
   return (
     // <div>UpdateTask</div>
@@ -94,7 +140,7 @@ export default function ViewTask({ setShowTask, task }) {
                                     
                 </div>
                 <div className='flex items-center justify-between'>
-                  <button onClick={(e)=>onSubmitNewTask(e)} className='rounded-md border-purple-900 border text-purple-900 w-2/5 py-1 my-2 hover:bg-purple-900 hover:text-white'>Update</button>
+                  <button onClick={(e)=>updateTask(e)} className='rounded-md border-purple-900 border text-purple-900 w-2/5 py-1 my-2 hover:bg-purple-900 hover:text-white'>Update</button>
                   <img onClick={()=>console.log("Delete Click")} src={DeleteIcon} className='cursor-pointer'/>
                 </div>
                 
