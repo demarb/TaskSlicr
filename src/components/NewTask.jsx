@@ -53,8 +53,9 @@ export default function NewTask({setShowAddNewTask, getTaskList}) {
             title: newTaskTitle,
             description: newTaskDescription,
             priority: newTaskPriority,
-            duration: ((newTaskDurationHours*60) + newTaskDurationMinutes),
+            duration: ((parseInt(newTaskDurationHours)*60) + parseInt(newTaskDurationMinutes)),
             status: newTaskStatus,
+            // dueDate: new Date(newTaskDueDate),
             dueDate: new Date(newTaskDueDate).toISOString(),
 
             userId: auth.currentUser ? auth.currentUser.uid : "",

@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ViewTask from './ViewTask'
 
 export default function Task({task}) {
+
+    //States
+    const [showTask, setShowTask] = useState(false)
 
     const setTaskColor = ()=>{
     
@@ -31,19 +35,23 @@ export default function Task({task}) {
         
     }
 
-
-
-    // setTaskColor()
-    // setTaskWidth()
-
     const taskStyles = {
         width: setTaskWidth(), // Set the width based on task length
         backgroundColor: setTaskColor(), // Set the background color based on priority
-      };
+    };
+
+
+    const viewTask = ()=> {
+        setShowTask((prevState)=>!prevState)
+    }
 
     return (
-        <div style={taskStyles} className='bg-yellow-300 w-3/4 mx-2 h-20 rounded-lg p-1 my-2 overflow-hidden'>
-            {task.title}
-        </div>
+        <>
+            <div onClick={viewTask} style={taskStyles} className='bg-yellow-300 w-3/4 mx-2 h-20 rounded-lg p-1 my-2 cursor-pointer overflow-hidden'>
+                {task.title}
+            </div>
+            {showTask ? <ViewTask setShowTask={setShowTask} task={task}/> : <></>}
+        </>
+        
     )
 }
