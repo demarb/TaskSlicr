@@ -9,7 +9,7 @@ let userStore = (set) => ({
         email: "",
         photoUrl: "",
     },
-    task_algorithm: "",
+    task_algorithm: "FCFS",
     setUser: (user) => set((state) => ({ ...state, user })),
     clearUser: () =>
         set((state) => ({
@@ -20,7 +20,9 @@ let userStore = (set) => ({
                 photoUrl: "",
             },
         })),
+    setTaskAlgorithm: (task_algorithm) => set((state) => ({ ...state, task_algorithm })),
 })
+
 
 userStore = devtools(userStore)
 userStore = persist(userStore, { name: 'user_store' })

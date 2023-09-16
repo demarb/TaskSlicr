@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
-import { useTaskStore } from '../store';
+import { useUserStore, useTaskStore } from '../store';
 
 import { database, auth } from "../config/firebase";
-import { getDocs, collection, addDoc, deleteDoc, doc, updateDoc, query, where } from 'firebase/firestore'
+import { getDocs, collection, addDoc, deleteDoc, doc, updateDoc, query, where, orderBy } from 'firebase/firestore'
 import Task from '../components/Task';
 
 
@@ -15,11 +15,17 @@ export default function Scheduler() {
 
   //Zustand states
   const setTaskList = useTaskStore((state)=>state.setTaskList)
+  // const task_algorithm = useUserStore(state=>state.task_algorithm)
+  const setTaskAlgorithm = useUserStore(state=>state.setTaskAlgorithm)
   
   console.log("Renders")
   const taskList = useTaskStore((state) => state.taskList)
   console.log("Task list in state=>")
   console.log(taskList)
+
+  const task_algorithm = useUserStore((state) => state.task_algorithm)
+  console.log(task_algorithm)
+  
   
   // const taskList = useTaskStore((state) => state.taskList)
   // console.log("Task list in state=>")
@@ -29,15 +35,15 @@ export default function Scheduler() {
   const getTaskList = async () =>{
     try {
       // Read the data
-
       const queryRef = query(
         tasksCollectionRef,
-        where("userId", "==", auth.currentUser.uid)
+        where("userId", "==", auth.currentUser.uid),
+        orderBy("createdTimestamp", "desc")
       )
-
       const data = await getDocs(queryRef)
+      console.log(data)
 
-      //set data
+      //set data from docs received and add their id to the object
       const filteredData = data.docs.map((doc)=>{
         return {
           ...doc.data(),
@@ -45,18 +51,76 @@ export default function Scheduler() {
         
         }
       })
-      console.log("What the actual fuck")
-      // console.log(filteredData)
+
+      //Sort data based on task setting
+      const sortedData = sortTasks(task_algorithm, filteredData)
+
+      //Set Sorted data
+      // setTaskList(sortedData)
       setTaskList(filteredData)
+
+
+      
 
     } catch (error) {
       console.error(error)
     }
 
   }
+
+  //useEffects
   useEffect(()=>{
     getTaskList()
   }, [])
+
+  //Function
+  function sortTasks(task_algorithm, filteredData){
+    //"FCFS, SJF, LJF, RS, PS, MPS"
+    console.log(`Task Algorithm Selected: ${task_algorithm}`)
+    // let filteredData1= [1, 2, 3]
+    switch (task_algorithm) {
+      case "FCFS":
+        return filteredData.reverse()
+        break;
+      case "LIFO":
+        return filteredData
+        break;
+      case "SJF":
+        return filteredData.sort((taskA, taskB)=>taskA.duration - taskB.duration)
+        break;
+      case "LJF":
+        return filteredData.sort((taskA, taskB)=>taskB.duration - taskA.duration)
+        break;
+      case "RS":
+        // Knuth shuffle algorithm - swap last element with random index and decrease on next iteration
+        for (let i = filteredData.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          // Swap array[i] and array[j]
+          [filteredData[i], filteredData[j]] = [filteredData[j], filteredData[i]];
+        }
+        return filteredData
+        break;
+      case "PS":
+        const priorityMap = {
+          "Low": 1,
+          "Medium": 2,
+          "High": 3,
+        };
+        filteredData.sort((taskA, taskB) => priorityMap[taskA.priority] - priorityMap[taskB.priority]);
+
+        return filteredData
+        break;
+      case "MPS":
+        return filteredData
+        break;
+      
+      default:
+        break;
+    }
+
+  }
+
+  
   
 
   return (
@@ -64,13 +128,23 @@ export default function Scheduler() {
         
         <Nav getTaskList={getTaskList}/>
         
+        <section className='flex flex-wrap items-center flex-auto mt-2 mx-4 md:mx-12 md:mt-4 lg:mx-24'>
+          <label htmlFor="algorithm-setting" className='px-2 font-bold'>Current Task Algorithm: </label>
+          {/* <select name="algorithm-setting" id="algorithm-setting" value={task_algorithm} onChange={e => setTaskAlgorithm(e.target.value)}  className='bg-purple-300 py-1 rounded-md md:mx-4'>
+              <option value="FCFS">First-Come First-Served</option>
+              <option value="LIFO">Last-In First-Out</option>
+              <option value="SJF">Shortest Job First</option>
+              <option value="LJF">Longest Job First</option>
+              <option value="RS">Random Scheduling</option>
+              <option value="PS">Priority Scheduling</option>
+              <option value="MPS">Multilevel Priority Scheduling</option>
+          </select> */}
+          <h1 className='bg-purple-300 px-8 py-1 rounded-md md:mx-4'>{task_algorithm}</h1>
+        </section>
+        
+        
 
-        {/* Sample Mockup Sizes:
-          1. 10 to 20 Minutes => w-1/4
-          2. 30 to 40  Minutes => w-2/4
-          3. 50+  Minutes => w-3/4 */}
-
-        <section className='flex flex-wrap flex-auto mx-4 py-2 md:mx-12 md:py-4 lg:mx-24 lg:py-10'>
+        <section className='flex flex-wrap flex-auto mx-4 py-2 md:mx-12 md:py-4 lg:mx-24 lg:py-6'>
 
           {
             taskList.map((task)=>{

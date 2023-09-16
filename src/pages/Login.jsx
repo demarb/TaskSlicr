@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { auth, googleProvider } from "../config/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 
@@ -12,6 +12,11 @@ export default function Login() {
   //States
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  //Effects
+  useEffect(()=>{
+    isUserAlreadyLoggedIn()
+  }, [])
 
   //Zustand States
   const setUser = useUserStore(state=>state.setUser)
@@ -60,6 +65,20 @@ export default function Login() {
   }
 
   //Other Functions
+
+  const isUserAlreadyLoggedIn = ()=>{
+    //Check if user is logged in and redirect to home if necessary. - NOT DONE
+    setTimeout(()=>{
+      console.log(auth.currentUser)
+      if (auth.currentUser !== null){
+          console.log("Attempting navigating to home")
+          navigate("/app")
+      }else{
+          console.log("Do nothing")
+      }
+    }, 2000)
+  }
+  
   const loginSuccessful = ()=>{
     const user = {
       loggedIn: true,

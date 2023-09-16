@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { auth } from "../config/firebase";
 import LogoPurple from '../assets/logo-purple.png'
 import LogoWhite from '../assets/logo-white.png'
 
@@ -9,10 +10,7 @@ export default function Home() {
     //react-router
     const navigate = useNavigate()
     
-    function loginClick(){
-
-        //Check if user is logged in and redirect to home if necessary. - NOT DONE
-        
+    function loginClick(){        
         navigate("app/login")
         // <Link to="app/login"> Sign Up/In </Link>
     }
@@ -57,11 +55,6 @@ export default function Home() {
                             <span className='font-bold'>Scheduling Algorithms: </span>
                             Explore scheduling algorithms like First-Come, First-Served, among others, to optimize your 
                             task execution. TaskSlicr offers flexibility in how you manage your tasks.
-                        </li>
-                        <li>
-                            <span className='font-bold'>Multilevel Priority Queue: </span>
-                            Elevate your task management with a multilevel priority queue for fine-tuned control over
-                            different levels of task importance.
                         </li>
                     </ul>
                 </div>
