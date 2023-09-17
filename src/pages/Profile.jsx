@@ -80,7 +80,7 @@ export default function Profile() {
                         <option value="PS">Priority Scheduling</option>
                 </select>
                 <br />
-                <button className='bg-purple-900 border rounded-md text-white w-2/5 md:w-1/5 py-1 my-2 hover:text-purple-900 hover:bg-white hover:border-purple-900'>Save</button>
+                {/* <button className='bg-purple-900 border rounded-md text-white w-2/5 md:w-1/5 py-1 my-2 hover:text-purple-900 hover:bg-white hover:border-purple-900'>Save</button> */}
             </section>
 
         </section>

@@ -32,7 +32,12 @@ const useUserStore = create(userStore)
 //STORE - taskStore
 let taskStore = (set) => ({
     taskList: [],
-    setTaskList: (taskList) => set((state) => ({ ...state, taskList }))
+    setTaskList: (taskList) => set((state) => ({ ...state, taskList })),
+    clearTaskList: () => 
+        set((state)=>({
+            ...state,
+            taskList: []
+        }))
 })
 
 taskStore = devtools(taskStore)

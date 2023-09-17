@@ -8,7 +8,7 @@ import PlusIconWhite from '../assets/plus-icon-white.png'
 import ProfileIconWhite from '../assets/profile-white.png'
 import ExitPurple from '../assets/exit-purple.png'
 import { useNavigate } from 'react-router-dom';
-import {useUserStore} from '../store';
+import {useTaskStore, useUserStore} from '../store';
 import NewTask from './NewTask';
 
 export default function Nav({getTaskList}) {
@@ -18,6 +18,7 @@ export default function Nav({getTaskList}) {
 
     //Zustand States
     const user = useUserStore(state=>state.user)
+    const clearTaskList = useTaskStore(state=>state.clearTaskList)
 
 
 
@@ -30,6 +31,7 @@ export default function Nav({getTaskList}) {
         try {
                 
                 await signOut(auth);
+                clearTaskList()
                 navigate("/")
           
         } catch (error) {

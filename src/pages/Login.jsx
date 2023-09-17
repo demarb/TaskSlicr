@@ -76,7 +76,7 @@ export default function Login() {
       }else{
           console.log("Do nothing")
       }
-    }, 2000)
+    }, 1000)
   }
   
   const loginSuccessful = ()=>{
