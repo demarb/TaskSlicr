@@ -27,7 +27,7 @@ export default function NewTask({setShowAddNewTask, getTaskList}) {
     const [newTaskDurationHours, setNewTaskDurationHours] = useState(0)
     const [newTaskDurationMinutes, setNewTaskDurationMinutes] = useState(0)
     const [newTaskStatus, setNewTaskStatus] = useState(false)
-    const [newTaskDueDate, setNewTaskDueDate] = useState("")
+    const [newTaskDueDate, setNewTaskDueDate] = useState(new Date().toISOString().slice(0, 16))
 
     // console.log(newTaskPriority)
     // console.log(newTaskDurationHours)
