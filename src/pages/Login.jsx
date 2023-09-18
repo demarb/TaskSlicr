@@ -6,12 +6,15 @@ import LogoWhite from '../assets/logo-white.png'
 import googleLoginButton from '../assets/google-icon.png'
 import { useUserStore } from '../store'
 import { useNavigate } from 'react-router-dom';
+import CustomAlert from '../components/CustomAlert';
 
 
 export default function Login() {
   //States
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   //Effects
   useEffect(()=>{
@@ -33,7 +36,12 @@ export default function Login() {
           navigate("/app")
       
     } catch (error) {
-      console.error(error)
+      console.error(error.code)
+      const errorMessage = errorMessages[error.code] || 'An error occurred. Please try again later.';
+      setError(errorMessage);
+      setTimeout(() => {
+        setError(null); // Clear the error message after 2 seconds
+      }, 3000);
     }
   }
 
@@ -44,10 +52,19 @@ export default function Login() {
           await signInWithEmailAndPassword(auth, email, password);
 
           loginSuccessful()
+          // setSuccess(true)
+          // setTimeout(()=>{
+          //   setSuccess(false)
+          // }, 3000)
           navigate("/app")
       
     } catch (error) {
-      console.error(error)
+      console.error(error.code)
+      const errorMessage = errorMessages[error.code] || 'An error occurred. Please try again later.';
+      setError(errorMessage);
+      setTimeout(() => {
+        setError(null); // Clear the error message after 2 seconds
+      }, 3000);
     }
   }
 
@@ -58,9 +75,15 @@ export default function Login() {
 
           loginSuccessful()
           navigate("/app")
+          
       
     } catch (error) {
-      console.error(error)
+      console.error(error.code)
+      const errorMessage = errorMessages[error.code] || 'An error occurred. Please try again later.';
+      setError(errorMessage);
+      setTimeout(() => {
+        setError(null); // Clear the error message after 2 seconds
+      }, 3000);
     }
   }
 
@@ -89,7 +112,32 @@ export default function Login() {
     console.log(user)
 
     setUser(user)
+    
   }
+
+  //Mapping
+  const errorMessages = {
+    'auth/user-not-found': 'User does not exist',
+    'auth/wrong-password': 'Incorrect email/password.',
+    'auth/invalid-email': 'Invalid email entered',
+    'auth/uid-already-exists': 'User already exists.',
+    'auth/email-already-in-use': 'User already exists.',
+    'auth/email-already-exists': 'User already exists.',
+    'auth/internal-error': 'Server Error Occurred',
+    'auth/too-many-requests': 'Too many requests. Try again later.',
+    'auth/invalid-password': 'Password Invalid. String > 6 characters expected',
+    'auth/weak-password' : 'Weak Password. Please choose a stronger password.',
+    'auth/user-disabled': 'User account has been disabled.',
+    'auth/credential-already-in-use': 'Credential is already in use.',
+    'auth/invalid-credential': 'Invalid credential.',
+    'auth/missing-email': 'Email address is required.',
+    'auth/missing-password': 'Password is required.',
+    'auth/popup-closed-by-user': 'Google Signin Popup closed by user.',
+    'auth/account-exists-with-different-credential': 'Account with a different credential (Google) exists for this email.',
+    'auth/cancelled-popup-request': 'The Google sign-in request was cancelled before it could complete.',
+    'auth/operation-not-allowed': 'Operation not allowed',
+    'auth/popup-blocked': 'Google Sign In popup blocked.',
+  };
 
   return (
     <section className='bg-gray-200 h-screen flex flex-col'>
@@ -109,7 +157,9 @@ export default function Login() {
                 <button onClick={signIn} className='bg-purple-900 rounded-md text-white border w-4/5 my-1 py-1 hover:text-purple-900 hover:bg-white hover:border-purple-900'>Login</button>
                 <button onClick={signUp} className='bg-purple-900 rounded-md text-white border w-4/5 my-1 py-1 hover:text-purple-900 hover:bg-white hover:border-purple-900'>Sign Up</button>
                 <button onClick={signInWithGoogle} className='hover:border hover:rounded-md hover:border-purple-900'><img src={googleLoginButton}/></button>
-                <a href=""><h3>Forgot Password?</h3></a>
+                {error && <CustomAlert message={error} type="error" />}
+                {/* {success && <CustomAlert message="Login/Sign Up Successful. Redirecting..." type="success" />} */}
+                {/* <a href=""><h3>Forgot Password?</h3></a> */}
             </div>
             
         </div>
