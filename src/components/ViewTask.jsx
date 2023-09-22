@@ -100,8 +100,6 @@ export default function ViewTask({ setShowTask, task, getTaskList }) {
   }
 
   return (
-    // <div>UpdateTask</div>
-
     <div className='bg-black bg-opacity-70 h-full fixed z-10 left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 lg:w-full border-black border border-solid rounded-lg'>
             <div className='flex flex-col justify-around h-max bg-white fixed z-10 left-1/2 top-1/2 w-3/4 overflow-auto -translate-x-1/2 -translate-y-1/2 lg:w-1/2 border-gray-700 border border-solid rounded-lg p-4'>
                 <img onClick={()=>setShowTask((prevState)=>!prevState)} src={ExitPurple} className='ml-auto cursor-pointer'/>

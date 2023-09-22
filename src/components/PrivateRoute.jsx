@@ -6,11 +6,9 @@ import { useNavigate, Navigate } from 'react-router-dom';
 export default function PrivateRoute({ path, element, children }) {
 
     const isAuthenticated = auth.currentUser !== null;
-    // const navigate = useNavigate()
 
     if (!isAuthenticated){
         console.log("You are not logged In")
-        // navigate("/")
         return <Navigate to="/app/login"/>
     }else{
         console.log("You are logged In")

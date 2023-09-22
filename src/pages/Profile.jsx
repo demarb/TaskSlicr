@@ -3,18 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from "../config/firebase";
 import { signOut } from 'firebase/auth';
 
-
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import ProfileIconBlack from '../assets/profile-black.png'
 import { useUserStore } from '../store'
 
 export default function Profile() {
-
-  //Effects
-  // useEffect(()=>{
-  //   isUserAlreadyLoggedIn()
-  // }, [])
 
   //Zustand States
     const user = useUserStore(state=>state.user)
@@ -38,20 +32,6 @@ export default function Profile() {
       console.error(error)
     }
   }
-
-  //Other functions
-  // const isUserAlreadyLoggedIn = ()=>{
-  //   //Check if user is logged in and redirect to home if necessary. - NOT DONE
-  //   setTimeout(()=>{
-  //     console.log(auth.currentUser)
-  //     if (auth.currentUser !== null){
-  //         console.log("Attempting navigating to to sign up")
-  //         navigate("/")
-  //     }else{
-  //         console.log("Do nothing")
-  //     }
-  //   }, 2000)
-  // }
     
   return (
     <section className='min-h-screen flex flex-col'>
@@ -80,7 +60,6 @@ export default function Profile() {
                         <option value="PS">Priority Scheduling</option>
                 </select>
                 <br />
-                {/* <button className='bg-purple-900 border rounded-md text-white w-2/5 md:w-1/5 py-1 my-2 hover:text-purple-900 hover:bg-white hover:border-purple-900'>Save</button> */}
             </section>
 
         </section>

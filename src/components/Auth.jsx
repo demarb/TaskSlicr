@@ -7,23 +7,14 @@ function Auth(props) {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  // const [userPhotoUrl, setUserPhotoUrl] = useState("")
 
   const [currentUserLogged, setCurrentUserLogged] = useState({
     em: "",
     photo: ""
   })
 
-  // console.log(currentUserLogged)
-
-  // auth? console.log(auth.currentUser.email) : console.log("No user detected")
-
   const signUp = async () => {
     console.log("Normal Sign Up")
-    
-
-
-    
 
     try {
           await createUserWithEmailAndPassword(auth, email, password);
@@ -68,9 +59,6 @@ function Auth(props) {
 
   const signInWithGoogle = async () => {
     console.log("Sign In With Google")
-
-    // auth.currentUser ? console.log(`Current User: ${auth.currentUser.email}`) : console.log("No user detected after google signup")
-    // auth.currentUser ? setUserPhotoUrl(auth.currentUser.photoURL) : setUserPhotoUrl('')
 
     try {
           await signInWithPopup(auth, googleProvider);

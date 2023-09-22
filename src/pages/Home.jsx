@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { auth } from "../config/firebase";
 import LogoPurple from '../assets/logo-purple.png'
 import LogoWhite from '../assets/logo-white.png'
 import taskScreenshot from '../assets/task_screenshot2.png'
@@ -14,7 +13,6 @@ export default function Home() {
     
     function loginClick(){        
         navigate("app/login")
-        // <Link to="app/login"> Sign Up/In </Link>
     }
 
     return (
@@ -22,12 +20,11 @@ export default function Home() {
             <nav className='bg-purple-900 flex justify-between items-center h-auto px-2 md:px-8 lg:px-12'>
                 <img src={LogoPurple} className='w-48'/>
                 <div className='flex flex-row justify-center items-center w-1/3'>
-                    <button onClick={loginClick} className='rounded-md border-white border text-white hover:text-purple-900 hover:bg-white w-2/5 py-1 my-2'>Sign Up/In</button>
+                    <button onClick={loginClick} className='rounded-md border-white border text-white hover:text-purple-900 hover:bg-white w-2/5 py-1 my-2'>Sign In</button>
                 </div>
             </nav>
             <div className='leading-8'>
                 <div className='p-4 md:px-12 lg:px-60'>
-                    {/* <h1 className='text-2xl'>About TaskSlicr</h1> */}
                     <img src={LogoWhite} className='w-60 mx-auto'/>
                     <p>
                         Welcome to TaskSlicr, the versatile task management solution designed to adapt to your 
@@ -58,7 +55,9 @@ export default function Home() {
                             <span className='font-bold'>Scheduling Algorithms: </span>
                             Explore scheduling algorithms like First-Come, First-Served, among others, to optimize your 
                             task execution. TaskSlicr offers flexibility in how you manage your tasks.
-                            <img src={taskAlgorithm} className='mx-auto'/>
+                            <div className='mx-auto w-52 md:w-auto'>
+                                <img src={taskAlgorithm} className='mx-auto max-w-full object-contain '/>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -68,7 +67,7 @@ export default function Home() {
                     TaskSlicr is accessible as a web platform. To begin enhancing your task management experience, click below. 
                     TaskSlicr is here to adapt to your unique work style, so you can focus on what truly matters to you.
                     </p>
-                    <button onClick={loginClick} className='rounded-md border-white border text-white hover:text-purple-900 hover:bg-white w-2/5 py-1 my-2'>Sign Up/In</button>
+                    <button onClick={loginClick} className='rounded-md border-white border text-white hover:text-purple-900 hover:bg-white w-2/5 py-1 my-2'>Sign In</button>
 
                 </div>
 

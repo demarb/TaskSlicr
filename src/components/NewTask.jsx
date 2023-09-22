@@ -29,10 +29,6 @@ export default function NewTask({setShowAddNewTask, getTaskList}) {
     const [newTaskStatus, setNewTaskStatus] = useState(false)
     const [newTaskDueDate, setNewTaskDueDate] = useState(new Date().toISOString().slice(0, 16))
 
-    // console.log(newTaskPriority)
-    // console.log(newTaskDurationHours)
-    // console.log(newTaskDurationMinutes)
-
     //firestore Refs
     const tasksCollectionRef = collection(database, "tasks")
 
@@ -40,12 +36,8 @@ export default function NewTask({setShowAddNewTask, getTaskList}) {
     //Create New Task
     async function onSubmitNewTask(e){
         try {
-        // console.log(e)
-        
+
         e.preventDefault();
-        // const formattedDueDate = new Date(newTaskDueDate);
-        
-        // console.log(auth.currentUser.uid)
 
         await addDoc(
             tasksCollectionRef, 
@@ -55,7 +47,6 @@ export default function NewTask({setShowAddNewTask, getTaskList}) {
             priority: newTaskPriority,
             duration: ((parseInt(newTaskDurationHours)*60) + parseInt(newTaskDurationMinutes)),
             status: newTaskStatus,
-            // dueDate: new Date(newTaskDueDate),
             dueDate: new Date(newTaskDueDate).toISOString(),
 
             userId: auth.currentUser ? auth.currentUser.uid : "",

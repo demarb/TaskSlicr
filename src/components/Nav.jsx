@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import {  database, auth } from "../config/firebase";
+import {  auth } from "../config/firebase";
 import { signOut } from 'firebase/auth';
-import { getDocs, collection, addDoc, deleteDoc, doc, updateDoc, query, where } from 'firebase/firestore'
 
 import LogoPurple from '../assets/logo-purple.png'
 import PlusIconWhite from '../assets/plus-icon-white.png'
 import ProfileIconWhite from '../assets/profile-white.png'
-import ExitPurple from '../assets/exit-purple.png'
 import { useNavigate } from 'react-router-dom';
 import {useTaskStore, useUserStore} from '../store';
 import NewTask from './NewTask';
@@ -19,9 +17,7 @@ export default function Nav({getTaskList}) {
     //Zustand States
     const user = useUserStore(state=>state.user)
     const clearTaskList = useTaskStore(state=>state.clearTaskList)
-
-
-
+    
     //Firebase functions
     const navigate = useNavigate()
 

@@ -22,7 +22,6 @@ export default function AppRoutes(){
                     }>
                 </Route>
                 <Route path="login" element={ <Login /> }/>
-                {/* <Route path="profile" element={ <Profile /> }/>   */}
                 <Route 
                     path="profile" 
                     element=
