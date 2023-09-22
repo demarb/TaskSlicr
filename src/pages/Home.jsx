@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { auth } from "../config/firebase";
 import LogoPurple from '../assets/logo-purple.png'
 import LogoWhite from '../assets/logo-white.png'
+import taskScreenshot from '../assets/task_screenshot2.png'
+import taskAlgorithm from '../assets/task_algorithm2.png'
 
 export default function Home() {
 
@@ -33,6 +35,7 @@ export default function Home() {
                         everyone works differently. We empower you to manage your tasks in a way that suits your 
                         preferences and requirements.
                     </p>
+                    <img src={taskScreenshot} className='mx-auto'/>
                 </div>
                 <div className='bg-purple-900 p-4 md:px-12 lg:px-60 text-white'>
                     <h1 className='text-2xl pb-2'>Our Mission</h1>
@@ -55,6 +58,7 @@ export default function Home() {
                             <span className='font-bold'>Scheduling Algorithms: </span>
                             Explore scheduling algorithms like First-Come, First-Served, among others, to optimize your 
                             task execution. TaskSlicr offers flexibility in how you manage your tasks.
+                            <img src={taskAlgorithm} className='mx-auto'/>
                         </li>
                     </ul>
                 </div>
