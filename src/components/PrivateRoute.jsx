@@ -11,7 +11,7 @@ export default function PrivateRoute({ path, element, children }) {
     if (!isAuthenticated){
         console.log("You are not logged In")
         // navigate("/")
-        return <Navigate to="/"/>
+        return <Navigate to="/app/login"/>
     }else{
         console.log("You are logged In")
         return children

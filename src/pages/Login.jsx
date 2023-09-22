@@ -99,7 +99,7 @@ export default function Login() {
       }else{
           console.log("Do nothing")
       }
-    }, 1000)
+    }, 500)
   }
   
   const loginSuccessful = ()=>{
