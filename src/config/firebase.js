@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 // import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore'
@@ -22,5 +23,12 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app)
 export const googleProvider = new GoogleAuthProvider();
+
+// Create a ReCaptchaEnterpriseProvider instance using your reCAPTCHA Enterprise
+// site key and pass it to initializeAppCheck().
+const appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaEnterpriseProvider("6LcJCEgoAAAAAKxgrK8lnLDW2bZqk_k9fVg-YqiU"),
+    isTokenAutoRefreshEnabled: true // Set to true to allow auto-refresh.
+});
 
 export const database = getFirestore(app)
