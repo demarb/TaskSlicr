@@ -6,6 +6,7 @@ TaskSlicr is a task management tool that helps you organize tasks the way you fe
 
 ## Key Features:
 TaskSlicr can:
+
 Add tasks
 Update Tasks
 Delete Tasks
