@@ -18,21 +18,21 @@ export default function Home() {
     return (
         <section>
             <nav className='bg-purple-900 flex justify-between items-center h-auto px-2 md:px-8 lg:px-12'>
-                <img src={LogoPurple} className='w-48'/>
+                <img alt='Purple logo' src={LogoPurple} className='w-48'/>
                 <div className='flex flex-row justify-center items-center w-1/3'>
                     <button onClick={loginClick} className='rounded-md border-white border text-white hover:text-purple-900 hover:bg-white w-2/5 py-1 my-2'>Sign In</button>
                 </div>
             </nav>
             <div className='leading-8'>
                 <div className='p-4 md:px-12 lg:px-60'>
-                    <img src={LogoWhite} className='w-60 mx-auto'/>
+                    <img alt='White logo' src={LogoWhite} className='w-60 mx-auto'/>
                     <p>
                         Welcome to TaskSlicr, the versatile task management solution designed to adapt to your 
                         unique workflow. Unlike traditional task scheduling apps, TaskSlicr acknowledges that 
                         everyone works differently. We empower you to manage your tasks in a way that suits your 
                         preferences and requirements.
                     </p>
-                    <img src={taskScreenshot} className='mx-auto'/>
+                    <img alt='App feature screenshot with tasks' src={taskScreenshot} className='mx-auto'/>
                 </div>
                 <div className='bg-purple-900 p-4 md:px-12 lg:px-60 text-white'>
                     <h1 className='text-2xl pb-2'>Our Mission</h1>
@@ -56,7 +56,7 @@ export default function Home() {
                             Explore scheduling algorithms like First-Come, First-Served, among others, to optimize your 
                             task execution. TaskSlicr offers flexibility in how you manage your tasks.
                             <div className='mx-auto w-52 md:w-auto'>
-                                <img src={taskAlgorithm} className='mx-auto max-w-full object-contain '/>
+                                <img alt='App feature screenshot with settings' src={taskAlgorithm} className='mx-auto max-w-full object-contain '/>
                             </div>
                         </li>
                     </ul>
