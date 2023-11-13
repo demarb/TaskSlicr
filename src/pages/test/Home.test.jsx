@@ -109,6 +109,7 @@ describe("Image Tests", ()=>{
 
 
 test('Accessibility check', async()=>{
+    //Extend toHaveNoViolations to become a part of our react testing library
     expect.extend(toHaveNoViolations)
 
     const {container} = render(
