@@ -151,7 +151,7 @@ export default function ViewTask({ setShowTask, task, getTaskList }) {
                 </div>
                 <div className='flex items-center justify-between'>
                   <button onClick={(e)=>updateTask(e)} className='rounded-md border-purple-900 border text-purple-900 w-2/5 py-1 my-2 hover:bg-purple-900 hover:text-white'>Update</button>
-                  <img onClick={(e)=>deleteTask(e)} src={DeleteIcon} className='cursor-pointer'/>
+                  <img onClick={(e)=>deleteTask(e)} src={DeleteIcon} alt='Delete a task  button' className='cursor-pointer'/>
                 </div>
                 
             </div>
